@@ -3,11 +3,19 @@ import noteContext from "../context/notes/noteContext";
 
 const AddNote = () => {
   const [note, setNote] = useState({ title: "", description: "", tag: "" });
+  const [errors, setErrors] = useState([]);
   const context = useContext(noteContext);
   const { addNote } = context;
-  const handleAddNote = (e) => {
+  const handleAddNote = async (e) => {
     e.preventDefault();
-    addNote(note.title, note.description, note.tag);
+    const validationErrors = await addNote(note.title, note.description, note.tag);
+
+    if (validationErrors) {
+      setErrors(validationErrors);
+    } else {
+      setErrors([]);
+    }
+
     setNote({ title: "", description: "", tag: "" });
   };
   const onChange = (e) => {
@@ -31,6 +39,11 @@ const AddNote = () => {
             required
             onChange={onChange}
           />
+          {errors.find((err) => err.param === "title") && (
+            <p style={{ color: "red" }}>
+              {errors.find((err) => err.param === "title").msg}
+            </p>
+          )}
         </div>
         <div className="mb-3">
           <label htmlFor="description" className="form-label">
@@ -46,6 +59,11 @@ const AddNote = () => {
             required
             onChange={onChange}
           />
+          {errors.find((err) => err.param === "description") && (
+            <p style={{ color: "red" }}>
+              {errors.find((err) => err.param === "description").msg}
+            </p>
+          )}
         </div>
         <div className="mb-3">
           <label htmlFor="tag" className="form-label">
@@ -64,11 +82,6 @@ const AddNote = () => {
         </div>
         <button
           type="submit"
-          disabled={
-            note.title.length < 5 ||
-            note.description.length < 5 ||
-            note.tag.length < 5
-          }
           className="btn btn-warning"
           onClick={handleAddNote}
         >

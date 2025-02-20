@@ -51,21 +51,21 @@ const Notes = () => {
         type="button"
         className="btn btn-primary d-none"
         data-bs-toggle="modal"
-        data-bs-target="#exampleModal"
+        data-bs-target="#editNote"
       >
-        Launch demo modal
+        Launch edit note modal
       </button>
       <div
         className="modal fade"
-        id="exampleModal"
+        id="editNote"
         tabIndex="-1"
-        aria-labelledby="exampleModalLabel"
+        aria-labelledby="editNoteLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
+              <h5 className="modal-title" id="editNoteLabel">
                 Edit Note
               </h5>
               <button
@@ -135,11 +135,6 @@ const Notes = () => {
               </button>
               <button
                 type="button"
-                disabled={
-                  note.etitle.length < 5 ||
-                  note.edescription.length < 5 ||
-                  note.etag.length < 5
-                }
                 className="btn btn-primary"
                 onClick={handleUpdateNote}
               >
