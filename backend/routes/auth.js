@@ -59,7 +59,7 @@ router.post(
       // res.json(user);
     } catch (error) {
       console.error(error.message);
-      return res.status(500).send(INTERNAL_ERROR_MESSAGE);
+      return res.status(500).json(INTERNAL_ERROR_MESSAGE);
     }
   }
 );
@@ -103,7 +103,7 @@ router.post(
       return res.json({ success: true, authtoken: authToken });
     } catch (error) {
       console.error(error.message);
-      return res.status(500).send(INTERNAL_ERROR_MESSAGE);
+      return res.status(500).json(INTERNAL_ERROR_MESSAGE);
     }
   }
 );
@@ -114,13 +114,13 @@ router.post("/getuser", fetchuser, async (req, res) => {
     const user = await User.findById(userId);
 
     if (!user) {
-      return res.status(404).send("User not found");
+      return res.status(404).json("User not found");
     }
 
     return res.json(user);
   } catch (error) {
     console.error(error.message);
-    return res.status(500).send(INTERNAL_ERROR_MESSAGE);
+    return res.status(500).json(INTERNAL_ERROR_MESSAGE);
   }
 });
 module.exports = router;

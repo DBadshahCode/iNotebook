@@ -4,13 +4,20 @@ const fetchuser = require("../middleware/fetchuser");
 const Note = require("../models/Note");
 const { body, validationResult } = require("express-validator");
 
+const INTERNAL_ERROR_MESSAGE = "Something went wrong!";
+const AUTHORIZATION_ERROR_MESSAGE =
+  "You are not authorized to modify or access this note.";
+const NOTE_NOT_FOUND = "Note not found.";
+
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
+  const userId = req.body.id;
+
   try {
-    const notes = await Note.find({ user: req.user.id });
-    res.json(notes);
+    const notes = await Note.find({ userId });
+    return res.json(notes);
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    return res.status(500).json(INTERNAL_ERROR_MESSAGE);
   }
 });
 
@@ -29,7 +36,9 @@ router.post(
   async (req, res) => {
     try {
       const { title, description, tag } = req.body;
+
       const errors = validationResult(req);
+
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
@@ -40,19 +49,24 @@ router.post(
         tag,
         user: req.user.id,
       });
+
       const savedNote = await note.save();
-      res.json(savedNote);
+      return res.json(savedNote);
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Internal Server Error");
+      return res.status(500).json(INTERNAL_ERROR_MESSAGE);
     }
   }
 );
 
-router.put("/updatenote/:id", fetchuser,
+router.put(
+  "/updatenote/:id",
+  fetchuser,
   [
     body("title", "Enter a valid title").isLength({ min: 3 }),
-    body("description", "Description must be at least 5 characters").isLength({ min: 5 }),
+    body("description", "Description must be at least 5 characters").isLength({
+      min: 5,
+    }),
   ],
   async (req, res) => {
     const { title, description, tag } = req.body;
@@ -61,6 +75,7 @@ router.put("/updatenote/:id", fetchuser,
       const newNote = {};
 
       const errors = validationResult(req);
+
       if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
       }
@@ -75,44 +90,45 @@ router.put("/updatenote/:id", fetchuser,
         newNote.tag = tag;
       }
 
-      let note = await Note.findByIdAndUpdate(
+      const note = await Note.findByIdAndUpdate(
         req.params.id,
         { $set: newNote },
         { new: true }
       );
 
       if (!note) {
-        return res.status(404).send("Not Found");
+        return res.status(404).json(NOTE_NOT_FOUND);
       }
 
       if (note.user.toString() !== req.user.id) {
-        return res.status(401).send("Not Allowed");
+        return res.status(401).json(AUTHORIZATION_ERROR_MESSAGE);
       }
 
-      res.json(note);
+      return res.json(note);
     } catch (error) {
       console.error(error.message);
-      res.status(500).send("Internal Server Error");
+      return res.status(500).json(INTERNAL_ERROR_MESSAGE);
     }
-  });
-
+  }
+);
 
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try {
     let note = await Note.findById(req.params.id);
+
     if (!note) {
-      return res.status(404).send("Not Found");
+      return res.status(404).json(NOTE_NOT_FOUND);
     }
 
     if (note.user.toString() !== req.user.id) {
-      return res.status(401).send("Not Allowed");
+      return res.status(401).json(AUTHORIZATION_ERROR_MESSAGE);
     }
 
     note = await Note.findByIdAndDelete(req.params.id);
-    res.json({ success: "Note has been Deleted", note: note });
+    return res.json({ success: "Note has been Deleted", note: note });
   } catch (error) {
     console.error(error.message);
-    res.status(500).send("Internal Server Error");
+    return res.status(500).json(INTERNAL_ERROR_MESSAGE);
   }
 });
 
