@@ -60,21 +60,21 @@ const Notes = () => {
         type="button"
         className="btn btn-primary d-none"
         data-bs-toggle="modal"
-        data-bs-target="#editNote"
+        data-bs-target="#updateNote"
       >
         Launch edit note modal
       </button>
       <div
         className="modal fade"
-        id="editNote"
+        id="updateNote"
         tabIndex="-1"
-        aria-labelledby="editNoteLabel"
+        aria-labelledby="updateNoteLabel"
         aria-hidden="true"
       >
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title" id="editNoteLabel">
+              <h5 className="modal-title" id="updateNoteLabel">
                 Edit Note
               </h5>
               <button
