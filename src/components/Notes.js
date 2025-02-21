@@ -5,6 +5,7 @@ import AddNote from "./AddNote";
 import { useHistory } from "react-router-dom";
 
 const Notes = () => {
+  const [errors, setErrors] = useState([]);
   const context = useContext(noteContext);
   let history = useHistory();
   const { notes, getNote, editNote } = context;
@@ -34,9 +35,17 @@ const Notes = () => {
       etag: currentNote.tag,
     });
   };
-  const handleUpdateNote = (e) => {
-    editNote(note.id, note.etitle, note.edescription, note.etag);
-    refClose.current.click();
+  const handleUpdateNote = async (e) => {
+    e.preventDefault();
+
+    const validationErrors = await editNote(note.id, note.etitle, note.edescription, note.etag);
+
+    if (validationErrors) {
+      setErrors(validationErrors);
+    } else {
+      setErrors([]);
+      refClose.current.click();
+    }
   };
   const onChange = (e) => {
     setNote({ ...note, [e.target.name]: e.target.value });
@@ -91,6 +100,11 @@ const Notes = () => {
                     onChange={onChange}
                     value={note.etitle}
                   />
+                  {errors.find((err) => err.param === "title") && (
+                    <p style={{ color: "red" }}>
+                      {errors.find((err) => err.param === "title").msg}
+                    </p>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label htmlFor="edescription" className="form-label">
@@ -106,6 +120,11 @@ const Notes = () => {
                     onChange={onChange}
                     value={note.edescription}
                   />
+                  {errors.find((err) => err.param === "description") && (
+                    <p style={{ color: "red" }}>
+                      {errors.find((err) => err.param === "description").msg}
+                    </p>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label htmlFor="etag" className="form-label">

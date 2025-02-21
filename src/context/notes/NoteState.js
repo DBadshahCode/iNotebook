@@ -29,13 +29,13 @@ const NoteState = (props) => {
       body: JSON.stringify({ title, description, tag }),
     });
     
-    const note = await response.json();
+    const json = await response.json();
 
     if (!response.ok) {
-      return note.errors;
+      return json.errors;
     }
 
-    setNotes(notes.concat(note));
+    setNotes(notes.concat(json));
   };
 
   const deleteNote = async (id) => {
@@ -66,8 +66,13 @@ const NoteState = (props) => {
       },
       body: JSON.stringify({ title, description, tag }),
     });
+
     const json = await response.json();
-    console.log(json);
+
+    if (!response.ok) {
+      return json.errors;
+    }
+    
     let updateNotes = JSON.parse(JSON.stringify(notes));
     for (let index = 0; index < updateNotes.length; index++) {
       const element = updateNotes[index];

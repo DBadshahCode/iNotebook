@@ -49,41 +49,53 @@ router.post(
   }
 );
 
-router.put("/updatenote/:id", fetchuser, async (req, res) => {
-  const { title, description, tag } = req.body;
+router.put("/updatenote/:id", fetchuser,
+  [
+    body("title", "Enter a valid title").isLength({ min: 3 }),
+    body("description", "Description must be at least 5 characters").isLength({ min: 5 }),
+  ],
+  async (req, res) => {
+    const { title, description, tag } = req.body;
 
-  try {
-    const newNote = {};
-    if (title) {
-      newNote.title = title;
-    }
-    if (description) {
-      newNote.description = description;
-    }
-    if (tag) {
-      newNote.tag = tag;
-    }
+    try {
+      const newNote = {};
 
-    let note = await Note.findById(req.params.id);
-    if (!Note) {
-      return res.status(404).send("Not Found");
-    }
+      const errors = validationResult(req);
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
 
-    if (note.user.toString() !== req.user.id) {
-      return res.status(401).send("Not Allowed");
-    }
+      if (title) {
+        newNote.title = title;
+      }
+      if (description) {
+        newNote.description = description;
+      }
+      if (tag) {
+        newNote.tag = tag;
+      }
 
-    note = await Note.findByIdAndUpdate(
-      req.params.id,
-      { $set: newNote },
-      { new: true }
-    );
-    res.json(note);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Internal Server Error");
-  }
-});
+      let note = await Note.findByIdAndUpdate(
+        req.params.id,
+        { $set: newNote },
+        { new: true }
+      );
+
+      if (!note) {
+        return res.status(404).send("Not Found");
+      }
+
+      if (note.user.toString() !== req.user.id) {
+        return res.status(401).send("Not Allowed");
+      }
+
+      res.json(note);
+    } catch (error) {
+      console.error(error.message);
+      res.status(500).send("Internal Server Error");
+    }
+  });
+
 
 router.delete("/deletenote/:id", fetchuser, async (req, res) => {
   try {
