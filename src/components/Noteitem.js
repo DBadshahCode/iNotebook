@@ -18,7 +18,13 @@ const Noteitem = (props) => {
               deleteNote(note._id);
             }}
           ></i>
-          <i className="bi bi-pencil-square mx-1" role="button" onClick={()=>{updateNote(note)}}></i>
+          <i
+            className="bi bi-pencil-square mx-1"
+            role="button"
+            onClick={() => {
+              updateNote(note);
+            }}
+          ></i>
         </div>
       </div>
     </div>

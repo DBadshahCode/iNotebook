@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Swal from "sweetalert2";
 
 const Alert = (props) => {
+  const { alert } = props;
+
   const capitalize = (word) => {
     if (word === "danger") {
       word = "error";
@@ -8,16 +11,23 @@ const Alert = (props) => {
     const lower = word.toLowerCase();
     return lower.charAt(0).toUpperCase() + lower.slice(1);
   };
-  return (
-    props.alert && (
-      <div
-        className={`container alert alert-${props.alert.type} alert-dismissible fade show`}
-        role="alert"
-      >
-        <strong>{capitalize(props.alert.type)}! :</strong> {props.alert.msg}
-      </div>
-    )
-  );
+
+  useEffect(() => {
+    if (alert) {
+      Swal.fire({
+        icon: alert.type === "danger" ? "error" : alert.type,
+        title: capitalize(alert.type),
+        text: alert.msg,
+        timer: 3000,
+        showConfirmButton: false,
+        willClose: () => {
+          props.clearAlert && props.clearAlert();
+        },
+      });
+    }
+  }, [alert, props]); // Trigger when the alert prop changes
+
+  return <></>;
 };
 
 export default Alert;

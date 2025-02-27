@@ -38,7 +38,12 @@ const Notes = () => {
   const handleUpdateNote = async (e) => {
     e.preventDefault();
 
-    const validationErrors = await editNote(note.id, note.etitle, note.edescription, note.etag);
+    const validationErrors = await editNote(
+      note.id,
+      note.etitle,
+      note.edescription,
+      note.etag
+    );
 
     if (validationErrors) {
       setErrors(validationErrors);

@@ -5,10 +5,10 @@ const Navbar = () => {
   let location = useLocation();
   let history = useHistory();
 
-  const handleLogout = ()=> {
+  const handleLogout = () => {
     localStorage.removeItem("token");
     history.push("/login");
-  }
+  };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-success">
       <div className="container-fluid">
@@ -42,7 +42,8 @@ const Navbar = () => {
           </ul>
           {localStorage.getItem("token") ? (
             <button
-              className="btn btn-sm btn-danger mx-1" onClick={handleLogout}
+              className="btn btn-sm btn-danger mx-1"
+              onClick={handleLogout}
             >
               LogOut
             </button>

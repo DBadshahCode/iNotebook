@@ -8,7 +8,11 @@ const AddNote = () => {
   const { addNote } = context;
   const handleAddNote = async (e) => {
     e.preventDefault();
-    const validationErrors = await addNote(note.title, note.description, note.tag);
+    const validationErrors = await addNote(
+      note.title,
+      note.description,
+      note.tag
+    );
 
     if (validationErrors) {
       setErrors(validationErrors);

@@ -26,11 +26,11 @@ function App() {
       <NoteState>
         <Router>
           <Navbar />
-          
+
           <div className="container">
             <Switch>
               <Route exact path="/">
-                <Home showAlert={showAlert}/>
+                <Home showAlert={showAlert} />
               </Route>
               <Route exact path="/login">
                 <Login showAlert={showAlert} />

@@ -10,10 +10,14 @@ const AUTHORIZATION_ERROR_MESSAGE =
 const NOTE_NOT_FOUND = "Note not found.";
 
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
-  const userId = req.body.id;
-
+  const userId = req.user.id;
   try {
-    const notes = await Note.find({ userId });
+    const notes = await Note.find({ user: userId});
+
+    if (!notes) {
+      return res.status(404).json({ msg: "No notes found" });
+    }
+
     return res.json(notes);
   } catch (error) {
     console.error(error.message);
@@ -36,6 +40,7 @@ router.post(
   async (req, res) => {
     try {
       const { title, description, tag } = req.body;
+      const userId = req.user.id;
 
       const errors = validationResult(req);
 
@@ -47,7 +52,7 @@ router.post(
         title,
         description,
         tag,
-        user: req.user.id,
+        user: userId,
       });
 
       const savedNote = await note.save();

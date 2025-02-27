@@ -7,7 +7,7 @@ const Login = (props) => {
 
   const handleLogIn = async (e) => {
     e.preventDefault();
-    const response = await fetch(`http://localhost:5000/api/auth/login`, {
+    const response = await fetch(`/api/auth/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -18,13 +18,11 @@ const Login = (props) => {
       }),
     });
     const json = await response.json();
-    console.log(json);
     if (json.success) {
       localStorage.setItem("token", json.authtoken);
-      props.showAlert("Login Success", "success");
       history.push("/");
     } else {
-      props.showAlert("Login Failed", "danger");
+      props.showAlert(json.error, "danger");
     }
   };
 
@@ -41,6 +39,7 @@ const Login = (props) => {
           </label>
           <input
             type="email"
+            required={ true }
             className="form-control"
             id="email"
             name="email"
@@ -58,6 +57,7 @@ const Login = (props) => {
           </label>
           <input
             type="password"
+            required={ true }
             className="form-control"
             id="password"
             name="password"
