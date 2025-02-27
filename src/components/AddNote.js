@@ -53,7 +53,7 @@ const AddNote = () => {
           <label htmlFor="description" className="form-label">
             Description
           </label>
-          <input
+          <textarea
             type="text"
             name="description"
             className="form-control"
