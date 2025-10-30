@@ -1,14 +1,8 @@
 import React from "react";
-import { Link, useLocation, useHistory } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const Navbar = () => {
   let location = useLocation();
-  let history = useHistory();
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    history.push("/login");
-  };
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-success">
       <div className="container-fluid">
@@ -41,12 +35,13 @@ const Navbar = () => {
             </li>
           </ul>
           {localStorage.getItem("token") ? (
-            <button
-              className="btn btn-sm btn-danger mx-1"
-              onClick={handleLogout}
+            <Link
+              className="btn btn-sm btn-warning mx-1"
+              to="/profile"
+              role="button"
             >
-              LogOut
-            </button>
+              Profile
+            </Link>
           ) : (
             <form>
               <Link

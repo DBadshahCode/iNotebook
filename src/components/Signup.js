@@ -12,7 +12,7 @@ const Signup = (props) => {
 
   const handleSignUp = async (e) => {
     e.preventDefault();
-    const { name, email, password } = credentials;
+    const { name, email, password, } = credentials;
     const response = await fetch(`/api/auth/createuser`, {
       method: "POST",
       headers: {

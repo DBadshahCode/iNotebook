@@ -46,12 +46,6 @@ router.post(
         password: hashedPassword,
       });
 
-      // const data = {
-      //   user: {
-      //     id: user.id,
-      //   },
-      // };
-
       const authToken = jwt.sign({ user: { id: user.id } }, JWT_SECRET);
 
       return res.json({ success: true, authtoken: authToken });

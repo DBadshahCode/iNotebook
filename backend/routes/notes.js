@@ -129,8 +129,9 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
       return res.status(401).json(AUTHORIZATION_ERROR_MESSAGE);
     }
 
-    note = await Note.findByIdAndDelete(req.params.id);
-    return res.json({ success: "Note has been Deleted", note: note });
+    await note.softDelete();
+
+    return res.json({ success: "Note has been Deleted", note });
   } catch (error) {
     console.error(error.message);
     return res.status(500).json(INTERNAL_ERROR_MESSAGE);

@@ -1,25 +1,47 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 
-const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+      default: null,
+    },
   },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-});
+  { timestamps: true }
+);
 
-const User = mongoose.model("user", UserSchema);
-module.exports = User;
+UserSchema.index({ email: 1 });
+
+UserSchema.methods.softDelete = function () {
+  this.isDeleted = true;
+  this.deletedAt = new Date();
+  return this.save();
+};
+
+UserSchema.methods.restore = function () {
+  this.isDeleted = false;
+  this.deletedAt = null;
+  return this.save();
+};
+
+module.exports = mongoose.model("User", UserSchema);
