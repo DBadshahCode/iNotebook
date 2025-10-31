@@ -11,12 +11,6 @@ const Navbar = () => {
     setToken(localStorage.getItem("token"));
   }, [location]);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setToken(null);
-    navigate("/login");
-  };
-
   return (
     <nav
       className="navbar navbar-expand-lg navbar-light shadow-sm sticky-top"
