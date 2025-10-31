@@ -27,7 +27,7 @@ const Navbar = () => {
           className="navbar-brand fw-bold text-success fs-4"
           to="/"
         >
-          iNotebook
+          <i className="bi bi-journal-text me-1"></i> iNotebook
         </Link>
 
         {/* Navbar toggle for mobile view */}
@@ -80,19 +80,14 @@ const Navbar = () => {
             {!token ? (
               <>
                 <Link className="btn btn-outline-success mx-1" to="/login">
-                  Login
+                  <i className="bi bi-box-arrow-in-right me-1"></i> Login
                 </Link>
                 <Link className="btn btn-success mx-1" to="/signup">
-                  Signup
+                  <i className="bi bi-person-plus me-1"></i> Signup
                 </Link>
               </>
             ) : (
-              <button
-                className="btn btn-danger mx-1"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
+              ''
             )}
           </div>
         </div>

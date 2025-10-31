@@ -23,7 +23,7 @@ const AddNote = () => {
   return (
     <div className="container my-4" style={{ maxWidth: "600px" }}>
       <div className="card border-0 shadow-lg rounded-4 p-4">
-        <h2 className="text-center text-success fw-bold mb-4">Add a New Note</h2>
+        <h2 className="text-center text-success fw-bold mb-4">✏️ Add a New Note</h2>
         <form onSubmit={handleAddNote}>
           {/* Title */}
           <div className="form-floating mb-3">

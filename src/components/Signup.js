@@ -47,7 +47,7 @@ const Signup = (props) => {
 
   return (
     <div className="container my-5" style={{ maxWidth: "500px" }}>
-      <div className="card shadow border-0 p-4 rounded-4">
+      <div className="card shadow border-0 p-4" style={{ borderRadius: "15px" }}>
         <h2 className="text-center mb-4 text-success fw-bold">
           Create Your Account
         </h2>

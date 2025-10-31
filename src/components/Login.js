@@ -30,7 +30,7 @@ const Login = (props) => {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div className="d-flex justify-content-center align-items-center vh-100">
       <div
         className="card shadow-lg border-0 p-4"
         style={{ width: "380px", borderRadius: "15px" }}

@@ -64,10 +64,7 @@ const Notes = () => {
     <>
       {/* Add Note Section */}
       <div className="container my-4">
-        <div className="bg-white p-4 rounded-4 shadow-sm mb-4">
-          <h3 className="fw-semibold text-success mb-3">
-            ✏️ Add a New Note
-          </h3>
+        <div className="p-4 rounded-4 mb-4">
           <AddNote />
         </div>
 
