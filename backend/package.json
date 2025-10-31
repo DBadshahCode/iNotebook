@@ -1,6 +1,6 @@
 {
-  "name": "inotebook-backend",
-  "version": "1.0.0",
+  "name": "inotes-backend",
+  "version": "2.0.0",
   "description": "iNotebook - Your Notebook on the Cloud",
   "main": "index.js",
   "scripts": {
@@ -9,15 +9,15 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "bcryptjs": "^2.4.3",
+    "bcryptjs": "^3.0.2",
     "cors": "^2.8.5",
-    "dotenv": "^16.4.7",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
-    "express-validator": "^6.12.2",
+    "express-validator": "^7.3.0",
     "jsonwebtoken": "^9.0.2",
-    "mongoose": "^6.0.8"
+    "mongoose": "^8.19.2"
   },
   "devDependencies": {
-    "nodemon": "^2.0.13"
+    "nodemon": "^3.1.10"
   }
 }

@@ -1,12 +1,12 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    history.push("/login");
+    navigate("/login");
   };
 
   return (

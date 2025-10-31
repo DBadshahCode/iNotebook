@@ -23,28 +23,8 @@ const NotesSchema = new mongoose.Schema(
       default: "General",
       trim: true,
     },
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
-    deletedAt: {
-      type: Date,
-      default: null,
-    },
   },
   { timestamps: true }
 );
-
-NotesSchema.methods.softDelete = function () {
-  this.isDeleted = true;
-  this.deletedAt = new Date();
-  return this.save();
-};
-
-NotesSchema.methods.restore = function () {
-  this.isDeleted = false;
-  this.deletedAt = null;
-  return this.save();
-};
 
 module.exports = mongoose.model("Note", NotesSchema);

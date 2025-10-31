@@ -1,5 +1,5 @@
 import "./App.css";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import { Home } from "./components/Home";
 import NoteState from "./context/notes/NoteState";
@@ -29,20 +29,15 @@ function App() {
           <Navbar />
 
           <div className="container">
-            <Switch>
-              <Route exact path="/">
-                <Home showAlert={showAlert} />
-              </Route>
-              <Route exact path="/login">
-                <Login showAlert={showAlert} />
-              </Route>
-              <Route exact path="/signup">
-                <Signup showAlert={showAlert} />
-              </Route>
-              <Route exact path="/profile">
-                <Profile />
-              </Route>
-            </Switch>
+            <Routes>
+              <Route path="/" element={<Home showAlert={showAlert} />} />
+              <Route path="/login" element={<Login showAlert={showAlert} />} />
+              <Route
+                path="/signup"
+                element={<Signup showAlert={showAlert} />}
+              />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
           </div>
           <Alert alert={alert} />
         </Router>

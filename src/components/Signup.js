@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Signup = (props) => {
   const [credentials, setCredentials] = useState({
@@ -8,7 +8,7 @@ const Signup = (props) => {
     password: "",
     cpassword: "",
   });
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
@@ -25,7 +25,7 @@ const Signup = (props) => {
     if (json.success) {
       localStorage.setItem("token", json.authtoken);
       props.showAlert("Signup Success", "success");
-      history.push("/");
+      navigate("/");
     } else {
       props.showAlert("Signup Failed", "danger");
     }

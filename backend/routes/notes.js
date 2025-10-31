@@ -12,7 +12,7 @@ const NOTE_NOT_FOUND = "Note not found.";
 router.get("/fetchallnotes", fetchuser, async (req, res) => {
   const userId = req.user.id;
   try {
-    const notes = await Note.find({ user: userId});
+    const notes = await Note.find({ user: userId });
 
     if (!notes) {
       return res.status(404).json({ msg: "No notes found" });
@@ -129,7 +129,7 @@ router.delete("/deletenote/:id", fetchuser, async (req, res) => {
       return res.status(401).json(AUTHORIZATION_ERROR_MESSAGE);
     }
 
-    await note.softDelete();
+    await note.deleteOne();
 
     return res.json({ success: "Note has been Deleted", note });
   } catch (error) {

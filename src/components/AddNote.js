@@ -41,7 +41,6 @@ const AddNote = () => {
             value={note.title}
             minLength="5"
             required
-            autoComplete={false}
             onChange={onChange}
           />
           {errors.find((err) => err.param === "title") && (
@@ -62,7 +61,6 @@ const AddNote = () => {
             value={note.description}
             minLength="5"
             required
-            autoComplete={false}
             onChange={onChange}
           />
           {errors.find((err) => err.param === "description") && (
@@ -83,7 +81,6 @@ const AddNote = () => {
             value={note.tag}
             minLength="5"
             required
-            autoComplete={false}
             onChange={onChange}
           />
         </div>

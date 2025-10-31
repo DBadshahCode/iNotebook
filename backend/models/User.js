@@ -18,30 +18,8 @@ const UserSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    isDeleted: {
-      type: Boolean,
-      default: false,
-    },
-    deletedAt: {
-      type: Date,
-      default: null,
-    },
   },
   { timestamps: true }
 );
-
-UserSchema.index({ email: 1 });
-
-UserSchema.methods.softDelete = function () {
-  this.isDeleted = true;
-  this.deletedAt = new Date();
-  return this.save();
-};
-
-UserSchema.methods.restore = function () {
-  this.isDeleted = false;
-  this.deletedAt = null;
-  return this.save();
-};
 
 module.exports = mongoose.model("User", UserSchema);
